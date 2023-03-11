@@ -5,7 +5,7 @@ from tables import *
 
 matplotlib.use('TkAgg')
 
-def draw_Fx(Fx,project_data,pareto):
+def draw_Fx(Fx,project_data,pareto,slater,Omega_matrix):
 
     major_ticks = np.arange(-500, 5500, 500)
     minor_ticks = np.arange(-500, 5000, 250)
@@ -30,10 +30,25 @@ def draw_Fx(Fx,project_data,pareto):
 
     dot_size = 5
     for i in range(len(project_data)):
-        if project_data[i] not in pareto:
-            Fx.plot(project_data[i].f1,project_data[i].f2,'k.',markersize=dot_size)
+        if project_data[i] in slater:
+            Fx.plot(project_data[i].f1,project_data[i].f2,'r.',markersize=dot_size)
+        elif project_data[i] in pareto and project_data[i] not in slater:
+            Fx.plot(project_data[i].f1, project_data[i].f2,'b.',markersize=dot_size)
         else:
-            Fx.plot(project_data[i].f1, project_data[i].f2,'r.',markersize=dot_size)
+            Fx.plot(project_data[i].f1, project_data[i].f2, 'k.', markersize=dot_size)
+
+    #add slater cone
+    for i in range(len(slater)):
+        k1 = Omega_matrix[0][1] / Omega_matrix[0][0]
+        k2 = Omega_matrix[1][1] / Omega_matrix[1][0]
+        c1 = slater[i].f2 - k1 * slater[i].f1
+        c2 = slater[i].f2 - k2 * slater[i].f1
+        j1_1 = np.linspace(0, slater[i].f1, 20)
+        j1_2 = np.linspace(slater[i].f1, 5000, 20)
+        Fx.plot(j1_1,k2*j1_1+c2,linestyle='-', linewidth=0.5, color='red')
+        Fx.plot(j1_2,k1*j1_2+c1,linestyle='-', linewidth=0.5, color='red')
+
+
     plt.grid(True)
 
 def draw_mu(mu,B_matrix,Omega_matrix):
@@ -119,14 +134,14 @@ def draw_mu(mu,B_matrix,Omega_matrix):
 
 
 
-def draw_graphs(project_data,pareto,B_matrix,Omega_matrix):
+def draw_graphs(project_data,pareto,B_matrix,Omega_matrix,slater):
     windows_size = (9,9)
     plt.figure(figsize=windows_size)
     mu = plt.gca()
     draw_mu(mu,B_matrix,Omega_matrix)
     plt.figure(figsize=windows_size)
     Fx = plt.gca()
-    draw_Fx(Fx,project_data,pareto)
+    draw_Fx(Fx,project_data,pareto,slater,Omega_matrix)
     plt.show()
 
 

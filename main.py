@@ -11,10 +11,11 @@ if __name__ == '__main__':
     show_pareto(pareto)
     B_matrix = find_intersection_points(dimensions)
     Omega_matrix = get_Omega_matrix(B_matrix)
+    print("Множество Слейтера:")
     draw_slater_exclude_table(project_data,Omega_matrix)
-    print(B_matrix)
-    print(Omega_matrix)
-    draw_graphs(project_data,pareto,B_matrix,Omega_matrix)
+    slater = make_slater(project_data)
+    show_slater(slater)
+    draw_graphs(project_data,pareto,B_matrix,Omega_matrix,slater)
 
 
 

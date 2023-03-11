@@ -76,12 +76,27 @@ def make_pareto(project_data):
             pareto.append(project)
     return pareto
 
+def make_slater(project_data):
+    slater = []
+    for project in project_data:
+        if not (project.is_slater_excluded()):
+            slater.append(project)
+    return slater
+
+
 def show_pareto(pareto):
     pareto_table = PrettyTable()
     pareto_table.field_names = ["№", "j1", "j2"]
     for i in range(len(pareto)):
         pareto_table.add_row([pareto[i].number,pareto[i].f1, pareto[i].f2])
     print(pareto_table)
+
+def show_slater(slater):
+    slater_table = PrettyTable()
+    slater_table.field_names = ["№", "j1", "j2"]
+    for i in range(len(slater)):
+        slater_table.add_row([slater[i].number,slater[i].f1, slater[i].f2])
+    print(slater_table)
 
 
 def is_p1_dominate_p2(p1,p2,Omega_matrix):
