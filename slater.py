@@ -31,7 +31,9 @@ def make_mu_matrix(grey_code_matrix):
 
     return mu_matrix
 
-def find_intersection_points(mu_matrix):
+def find_intersection_points(dimensions):
+    grey_code_matrix = make_grey_code_matrix(dimensions)
+    mu_matrix = make_mu_matrix(grey_code_matrix)
     B_matrix=[]
     for i in range(len(mu_matrix)-1):
         L_mu = (mu_matrix[i][0] + mu_matrix[i][1] - 1) * (mu_matrix[i+1][0] + mu_matrix[i+1][1] - 1)
@@ -64,11 +66,11 @@ def get_Omega_matrix(B_matrix):
     Omega_matrix = []
     y1=1
     x1 = -((B_matrix[0][1] * y1)/B_matrix[0][0])
-    Omega_matrix.append((x1,y1))
+    Omega_matrix.append((x1/3,y1/3))
 
     x2 = 1
     y2 = -((B_matrix[1][0] * x2)/B_matrix[1][1])
-    Omega_matrix.append((x2,y2))
+    Omega_matrix.append((x2/3,y2/3))
     return Omega_matrix
 
 

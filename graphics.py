@@ -110,7 +110,7 @@ def draw_mu(mu,B_matrix,Omega_matrix):
 
     #vectors_Omega
     for i in range(len(Omega_matrix)):
-        plt.quiver(0, 0, Omega_matrix[i][0]/3,Omega_matrix[i][1]/3, color='r', units='xy', scale=1)
+        plt.quiver(0, 0, Omega_matrix[i][0],Omega_matrix[i][1], color='r', units='xy', scale=1)
 
 
     plt.xlabel(r'$mu1$')
