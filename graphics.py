@@ -36,7 +36,7 @@ def draw_Fx(Fx,project_data,pareto):
             Fx.plot(project_data[i].f1, project_data[i].f2,'r.',markersize=dot_size)
     plt.grid(True)
 
-def draw_mu(mu):
+def draw_mu(mu,B_matrix,Omega_matrix):
     major_ticks = np.arange(-1, 1.1, 0.1)
     minor_ticks = np.arange(-1, 1.1, 0.050)
 
@@ -47,12 +47,15 @@ def draw_mu(mu):
 
     mu.tick_params(axis='both', which='major', labelsize=10)
 
+    plt.grid(True)
+
     mu.set_title('Mu')
     mu.set_aspect(1)
     mu.set_xlim((-1,1))
     mu.set_ylim((-1,1))
     plt.axhline(0, color='orange')
     plt.axvline(0, color='orange')
+
 
     #mu -- lines
 
@@ -76,19 +79,19 @@ def draw_mu(mu):
 
     x = np.linspace(mu1_min,mu1_min,20)
     y = np.linspace(mu2_min,mu2_max,20)
-    mu.plot(x, y,linestyle='-',linewidth=2,color='red')
+    mu.plot(x, y,linestyle='-',linewidth=2,color='black')
 
     x = np.linspace(mu1_max,mu1_max,20)
     y = np.linspace(mu2_min,mu2_max,20)
-    mu.plot(x, y,linestyle='-',linewidth=2,color='red')
+    mu.plot(x, y,linestyle='-',linewidth=2,color='black')
 
     y = np.linspace(mu2_min,mu2_min,20)
     x = np.linspace(mu1_min,mu1_max,20)
-    mu.plot(x, y,linestyle='-',linewidth=2,color='red')
+    mu.plot(x, y,linestyle='-',linewidth=2,color='black')
 
     y = np.linspace(mu2_max,mu2_max,20)
     x = np.linspace(mu1_min,mu1_max,20)
-    mu.plot(x, y,linestyle='-',linewidth=2,color='red')
+    mu.plot(x, y,linestyle='-',linewidth=2,color='black')
 
     #diagonal
 
@@ -96,16 +99,31 @@ def draw_mu(mu):
     y = -x + 1
     mu.plot(x, y, linestyle='-', linewidth=2, color='black')
 
+    #intersection_points
+    dot_size = 8
+    for i in range(len(B_matrix)):
+        mu.plot(B_matrix[i][0], B_matrix[i][1], 'r.', markersize=dot_size)
+
+    #vectors_B
+    for i in range(len(B_matrix)):
+        plt.quiver(0, 0, B_matrix[i][0],B_matrix[i][1], color='b', units='xy', scale=1)
+
+    #vectors_Omega
+    for i in range(len(Omega_matrix)):
+        plt.quiver(0, 0, Omega_matrix[i][0]/3,Omega_matrix[i][1]/3, color='r', units='xy', scale=1)
+
+
     plt.xlabel(r'$mu1$')
     plt.ylabel(r'$mu2$')
-    plt.grid(True)
 
 
-def draw_graphs(project_data,pareto):
+
+
+def draw_graphs(project_data,pareto,B_matrix,Omega_matrix):
     windows_size = (9,9)
     plt.figure(figsize=windows_size)
     mu = plt.gca()
-    draw_mu(mu)
+    draw_mu(mu,B_matrix,Omega_matrix)
     plt.figure(figsize=windows_size)
     Fx = plt.gca()
     draw_Fx(Fx,project_data,pareto)

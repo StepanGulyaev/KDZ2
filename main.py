@@ -12,10 +12,12 @@ if __name__ == '__main__':
     grey_code_matrix = make_grey_code_matrix(dimensions)
     mu_matrix = make_mu_matrix(grey_code_matrix)
     B_matrix = find_intersection_points(mu_matrix)
+    Omega_matrix = get_Omega_matrix(B_matrix)
     print(grey_code_matrix)
     print(mu_matrix)
     print(B_matrix)
-    #draw_graphs(project_data,pareto)
+    print(Omega_matrix)
+    draw_graphs(project_data,pareto,B_matrix,Omega_matrix)
 
 
 

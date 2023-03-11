@@ -48,19 +48,28 @@ def find_intersection_points(mu_matrix):
     last_el_index = len(mu_matrix)-1
     L_mu = (mu_matrix[last_el_index][0] + mu_matrix[last_el_index][1] - 1) * (mu_matrix[0][0] + mu_matrix[0][1] - 1)
     if (L_mu <= 0):
-        if (mu_matrix[i][0] == mu_matrix[i + 1][0]):
-            x = mu_matrix[i][0]
+        if (mu_matrix[last_el_index][0] == mu_matrix[0][0]):
+            x = mu_matrix[last_el_index][0]
             y = round(-x + 1, 5)
             B_matrix.append((x, y))
-        elif (mu_matrix[i][1] == mu_matrix[i + 1][1]):
-            y = mu_matrix[i][1]
+        elif (mu_matrix[last_el_index][1] == mu_matrix[0][1]):
+            y = mu_matrix[last_el_index][1]
             x = round(-y + 1, 5)
             B_matrix.append((x, y))
 
     B_matrix = list(dict.fromkeys(B_matrix))
-
     return(B_matrix)
 
+def get_Omega_matrix(B_matrix):
+    Omega_matrix = []
+    y1=1
+    x1 = -((B_matrix[0][1] * y1)/B_matrix[0][0])
+    Omega_matrix.append((x1,y1))
+
+    x2 = 1
+    y2 = -((B_matrix[1][0] * x2)/B_matrix[1][1])
+    Omega_matrix.append((x2,y2))
+    return Omega_matrix
 
 
 
