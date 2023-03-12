@@ -33,7 +33,7 @@ def draw_Fx(Fx,project_data,pareto,slater,Omega_matrix):
         if project_data[i] in slater:
             Fx.plot(project_data[i].f1,project_data[i].f2,'r.',markersize=dot_size)
         elif project_data[i] in pareto and project_data[i] not in slater:
-            Fx.plot(project_data[i].f1, project_data[i].f2,'b.',markersize=dot_size)
+            Fx.plot(project_data[i].f1, project_data[i].f2,'c.',markersize=dot_size)
         else:
             Fx.plot(project_data[i].f1, project_data[i].f2, 'k.', markersize=dot_size)
 
@@ -121,15 +121,25 @@ def draw_mu(mu,B_matrix,Omega_matrix):
 
     #vectors_B
     for i in range(len(B_matrix)):
-        plt.quiver(0, 0, B_matrix[i][0],B_matrix[i][1], color='b', units='xy', scale=1)
+        plt.quiver(0, 0, B_matrix[i][0],B_matrix[i][1], color='b', units='xy',
+                   scale=1,label = f"b{i+1} ({B_matrix[i][0]},{B_matrix[i][1]})")
 
     #vectors_Omega
     for i in range(len(Omega_matrix)):
-        plt.quiver(0, 0, Omega_matrix[i][0],Omega_matrix[i][1], color='r', units='xy', scale=1)
+        plt.quiver(0, 0, Omega_matrix[i][0],Omega_matrix[i][1], color='r', units='xy',
+                   scale=1,label = f"o{i+1} ({round(Omega_matrix[i][0],3)},{round(Omega_matrix[i][1],3)})")
+
+    #annotations
+    mu.annotate("mu1L", xy=(mu1_min - 0.05,0 - 0.05),fontsize = 8)
+    mu.annotate("mu1H", xy=(mu1_max - 0.05, 0 - 0.05),fontsize = 8)
+    mu.annotate("mu2L", xy=(-0.1,mu2_min),fontsize = 8)
+    mu.annotate("mu2H", xy=(-0.1,mu2_max),fontsize = 8)
 
 
-    plt.xlabel(r'$mu1$')
-    plt.ylabel(r'$mu2$')
+    plt.xlabel(r'$mu1,J1$')
+    plt.ylabel(r'$mu2,J2$')
+
+    mu.legend(loc=2)
 
 
 

@@ -1,4 +1,3 @@
-from input import *
 from slater import *
 from prettytable import PrettyTable
 
